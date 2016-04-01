@@ -1,0 +1,48 @@
+{% extends '/index.html.twig' %}
+
+{% block title %}Lista uzytkowników{% endblock %}
+
+{% block content %}
+    <div id="lista_uzytkownikow">
+        <h1>Lista użytkowników systemu</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Imię i nazwisko</th>
+                    <th>E-mail</th>
+                    <th>PESEL</th>
+                    <th>Adres</th>
+                    <th>Ma wypożyczony</th>
+                    <th>Liczba wypożyczeń</th>
+                    <th>Liczba rezerwacji</th>
+                    <th>Zysk (PLN)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if count(uzytkownicy)==0 %}
+                <tr>
+                    <td colspan="8">Brak użytkowników</td>
+                </tr>
+                {% endif %}
+                {% for uzytkownik in uzytkownicy %}
+                <tr>
+                    <td>{{ uzytkownik.imie }} {{ uzytkownik.nazwisko }}</td>
+                    <td>{{ uzytkownik.email }}</td>
+                    <td>{{ uzytkownik.pesel }}</td>
+                    <td>{{ uzytkownik.ulica }}, {{ uzytkownik.kod_pocztowy }} {{ uzytkownik.miejscowosc }}</td>
+                    <td>
+                        {% if uzytkownik.ma_wypozyczony==null %}
+                            <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                        {% else %}
+                            <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                        {% endif %}
+                    </td>
+                    <td>{{ uzytkownik.liczba_wypozyczen }}</td>
+                    <td>{{ uzytkownik.liczba_rezerwacji }}</td>
+                    <td>{{ uzytkownik.zysk|default('0.00') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

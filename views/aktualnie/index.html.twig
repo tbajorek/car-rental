@@ -1,0 +1,31 @@
+{% extends '/index.html.twig' %}
+
+{% block title %}Aktualnie wypożyczony{% endblock %}
+
+{% block content %}
+    <div id="kontakt">
+        <h1>Aktualnie wypożyczony</h1>
+        <div class="list-group-item">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td>Pojazd</td>
+                        <td><a href="{{ url('profil_samochodu',{'id':aktualnie.samochod_id}) }}">{{ aktualnie.nazwa_marki }} {{ aktualnie.nazwa_samochodu }}</a></td>
+                    </tr>
+                    <tr>
+                        <td>Data wypożyczenia</td>
+                        <td>{{ aktualnie.data_od }}</td>
+                    </tr>
+                    <tr>
+                        <td>Termin zwrotu</td>
+                        <td>{{ aktualnie.termin_zwrotu }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/css/kontakt.css">
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends '/index.html.twig' %}
+
+{% block title %}Lista rabatów{% endblock %}
+
+{% block content %}
+    <div id="lista_rabatow">
+        <h1>Lista rabatów</h1>
+        <button id="dodaj-nowy-rabat" class="btn" type="button">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            Dodaj rabat
+        </button>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Kod</th>
+                    <th>Samochód</th>
+                    <th>Obniżka</th>
+                    <th>Obowiązuje do</th>
+                    <th>Obowiązuje do</th>
+                    <th>Jednorazowy</th>
+                    <th>Menu</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if count(rabaty)==0 %}
+                <tr>
+                    <td colspan="7">Brak rabatów</td>
+                </tr>
+                {% endif %}
+                {% for rabat in rabaty %}
+                <tr>
+                    <td>{{ rabat.numer }}</td>
+                    <td>
+                        {% if rabat.samochod_id==null %}
+                            wszystkie
+                        {% else %}
+                            <a href="{{ url('profil_samochodu', {'id':rabat.samochod_id}) }}">{{ rabat.nazwa_samochodu }}</a>
+                        {% endif %}
+                    </td>
+                    <td>{{ rabat.obnizka }} {% if rabat.procentowo==true %}%{% else %}PLN{% endif %}</td>
+                    <td>{{ reverse_date(rabat.obowiazuje_od) }}</td>
+                    <td>{{ reverse_date(rabat.obowiazuje_do) }}</td>
+                    <td>
+                        {% if rabat.jednorazowy==true %}
+                            <span class="glyphicon glyphicon-ok-sign" aria-hidden="true" title="Tak"></span>
+                        {% else %}
+                            <span class="glyphicon glyphicon-remove-sign" aria-hidden="true" title="Nie"></span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <button title="Edytuj" type="button" class="btn edytuj-rabat" data-id="{{ rabat.numer|trim }}">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </button>
+                        <button title="Usuń rabat" type="button" class="btn usun-rabat" data-id="{{ rabat.numer|trim }}">
+                            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="/js/admin.js"></script>
+{% endblock %}

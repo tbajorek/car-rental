@@ -1,0 +1,73 @@
+{% extends '/index.html.twig' %}
+
+{% block title %}Zarezerwuj samochód{% endblock %}
+
+{% block content %}
+    <div id="rezerwacja">
+        <h1>Rezerwacja samochodu</h1>
+        <form method="post" action="{{ url('rezerwuj') }}">
+            <div class="list-group-item">
+                <label class="checkbox">
+                    Pojazd:
+                    <select name="pojazd" id="pojazd">
+                        {% for samochod in samochody %}<option{% if samochod.samochod_id==wybrany_samochod.samochod_id %} selected{% endif %} value="{{ samochod.samochod_id }}">{{ samochod.nazwa_marki }} {{ samochod.nazwa_samochodu }}</option>{% endfor %}
+                    </select>
+                </label>
+            </div>
+            <input type="hidden" id="cena_pojazdu_dziennie" value="{{ wybrany_samochod.cena }}">
+            <div class="list-group-item">
+                <label class="checkbox">
+                    Od:
+                    <input type="date" name="data_od" id="data_od" value="" required>
+                </label>
+                <label class="checkbox">
+                    Do:
+                    <input type="date" name="data_do" id="data_do" value="" required>
+                </label>
+            </div>
+            <div class="list-group-item">
+                <div class="filter-group">
+                    <h4>Akcesoria:</h4>
+                    {% if count(opcje)>0 %}
+                        {% for opcja in opcje %}
+                            <label class="checkbox">
+                                <input class="akcesorium" name="akcesorium[]" type="checkbox" value="{{ opcja.akcesorium_id }}" data-cena="{{ opcja.cena }}" data-dziennie="{{ opcja.cena_dziennie }}">
+                                {{ opcja.nazwa_akcesorium }} +{{ opcja.cena }} PLN{% if opcja.cena_dziennie == true %}/dziennie{% else %}/jednorazowo{% endif %}
+                            </label>
+                        {% endfor %}
+                    {% else %}
+                        <span>brak</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="list-group-item">
+                <h4>Cena:</h4>
+                <span class="price-new">
+                    <span id="cena_dziennie">0.00</span>&nbsp;PLN/dzień<span id="pole_cena_dodatkowo">&nbsp;+<span id="cena_dodatkowo"></span>&nbsp;PLN/jednorazowo</span>
+                </span>
+                <h4>Razem:</h4>
+                <span class="price-new">
+                    <span id="cena_razem">0.00</span>&nbsp;PLN
+                </span>
+            </div>
+            <div class="list-group-item">
+                <label class="checkbox">
+                    Kod rabatowy:
+                    <input type="text" name="rabat">
+                </label>
+            </div>
+            <button type="submit" class="btn btn-cart">
+                Zatwierdź rezerwację
+                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+            </button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/css/rezerwacja.css">
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="/js/rezerwacja.js"></script>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends '/index.html.twig' %}
+
+{% block title %}Lista kategorii{% endblock %}
+
+{% block content %}
+    <div id="lista_kategorii">
+        <h1>Lista kategorii</h1>
+        <button id="dodaj-nowa-kategorie" class="btn" type="button">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            Dodaj kategorię
+        </button>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Nazwa</th>
+                <th>Menu</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if count(kategorie)==0 %}
+                <tr>
+                    <td colspan="2">Brak kategorii</td>
+                </tr>
+            {% endif %}
+            {% for kategoria in kategorie %}
+                <tr>
+                    <td>{{ kategoria.nazwa_kategorii }}</td>
+                    <td>
+                        <button title="Edytuj kategorię" type="button" class="btn edytuj-kategorie" data-id="{{ kategoria.kategoria_id }}">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </button>
+                        <button title="Usuń kategorię" type="button" class="btn usun-kategorie" data-id="{{ kategoria.kategoria_id }}">
+                            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="/js/admin.js"></script>
+{% endblock %}

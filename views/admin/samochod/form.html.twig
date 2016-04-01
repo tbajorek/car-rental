@@ -1,0 +1,118 @@
+{% extends '/index.html.twig' %}
+
+{% block title %}{{ tryb }} samochodu{% endblock %}
+
+{% block content %}
+    <div id="rezerwacja">
+        <h1>{{ tryb }} samochodu</h1>
+        {% if tryb=='Dodawanie' %}
+            <form method="post" action="{{ url('admin_dodaj_samochod') }}" enctype="multipart/form-data">
+        {% else %}
+                <form method="post" action="{{ url('admin_edytuj_samochod', {'id':samochod.samochod_id}) }}" enctype="multipart/form-data">
+        {% endif %}
+            <div class="list-group-item">
+                <label class="checkbox">
+                    Marka:
+                    <select name="marka" id="marka">
+                        {% for marka in marki %}<option{% if samochod.marka==marka.marka_id %} selected{% endif %} value="{{ marka.marka_id }}">{{ marka.nazwa_marki }}</option>{% endfor %}
+                    </select>
+                </label>
+            </div>
+            <div class="list-group-item">
+                <label class="checkbox">
+                    Nazwa:
+                    <input type="text" name="nazwa" value="{{ samochod.nazwa_samochodu }}">
+                </label>
+            </div>
+            <div class="list-group-item">
+                <label class="checkbox">
+                    Kategoria:
+                    <select name="kategoria" id="kategoria">
+                        {% for kategoria in kategorie %}<option{% if samochod.kategoria==kategoria.kategoria_id %} selected{% endif %} value="{{ kategoria.kategoria_id }}">{{ kategoria.nazwa_kategorii }}</option>{% endfor %}
+                    </select>
+                </label>
+            </div>
+            <div class="list-group-item">
+                <label class="checkbox">
+                    Przebieg:
+                    <input type="text" name="przebieg" value="{{ samochod.przebieg }}"> km
+                </label>
+            </div>
+            <div class="list-group-item">
+                <label class="checkbox">
+                    Rocznik:
+                    <input type="text" name="rocznik" value="{{ samochod.rocznik }}">
+                </label>
+            </div>
+            <div class="list-group-item">
+                <label class="checkbox">
+                    Pojemność:
+                    <input type="text" name="pojemnosc" value="{{ samochod.pojemnosc }}"> cm<sup>3</sup>
+                </label>
+            </div>
+            <div class="list-group-item">
+                <label class="checkbox">
+                    Liczba drzwi:
+                    <input type="text" name="liczba_drzwi"  value="{{ samochod.liczba_drzwi }}">
+                </label>
+            </div>
+            <div class="list-group-item">
+                <label class="checkbox">
+                    Cena:
+                    {% if tryb=='Edycja' and samochod.dostepny==false %}
+                        </label>Nie można w tym momencie edytować ceny - samochód jest wypożyczony.
+                        <input type="hidden" name="cena"  value="{{ samochod.cena }}">
+                </label>
+                    {% else %}
+                        <input type="text" name="cena"  value="{{ samochod.cena }}"> PLN/dzień
+                    {% endif %}
+            </div>
+            <div class="list-group-item">
+                <label class="checkbox">
+                    Opis:
+                    <textarea name="opis" id="opis">{{ samochod.opis|raw }}</textarea>
+                </label>
+            </div>
+            <div class="list-group-item">
+                <label class="checkbox">
+                    Zdjęcie:
+                    <input type="file" name="zdjecie">
+                </label>
+                {% if tryb=='Edycja' %}
+                <label class="checkbox filter-group">
+                    <input type="checkbox" name="usun_zdjecie">
+                    Usuń zdjęcie
+                </label>
+                {% endif %}
+                <input type="hidden" name="MAX_FILE_SIZE" value="2000000">
+            </div>
+            <div class="list-group-item">
+                <label id="opcje_panel" class="checkbox">
+                    Opcje:
+                    {% for opcja in opcje %}
+                        <div class="row filter-group"><input type="checkbox" name="opcje[]" value="{{ opcja.akcesorium_id }}"{% if opcja.selected==true %}checked{% endif %}>{{ opcja.nazwa_akcesorium }}</div>
+                    {% endfor %}
+                </label>
+            </div>
+            <button type="submit" class="btn btn-cart">
+                {% if tryb=='Edycja' %}
+                    <span class="glyphicon glyphicon-saved" aria-hidden="true"></span>
+                    Edytuj samochód
+                {% else %}
+                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                    Dodaj samochód
+                {% endif %}
+            </button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/css/rezerwacja.css">
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="/js/tinymce/tinymce.js"></script>
+    <script type="text/javascript" src="/js/form_samochod.js"></script>
+    <script>tinymce.init({ selector:'textarea#opis' });</script>
+{% endblock %}

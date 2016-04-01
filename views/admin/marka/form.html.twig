@@ -1,0 +1,40 @@
+{% extends '/index.html.twig' %}
+
+{% block title %}{{ tryb }} marki{% endblock %}
+
+{% block content %}
+    <div id="dodaj-form">
+        <h1>{{ tryb }} marki</h1>
+        {% if tryb=='Dodawanie' %}
+        <form method="post" action="{{ url('admin_dodaj_marke') }}">
+            {% else %}
+            <form method="post" action="{{ url('admin_edytuj_marke', {'id':marka.marka_id}) }}">
+                {% endif %}
+                <div class="list-group-item">
+                    <label class="checkbox">
+                        Nazwa marki:
+                        <input type="text" name="nazwa_marki" value="{{ marka.nazwa_marki }}" required>
+                    </label>
+                </div>
+                <div class="list-group-item">
+                    <label class="checkbox">
+                        Państwo:
+                        <select name="panstwo">
+                            {% for panstwo in panstwa %}
+                            <option value="{{ panstwo.panstwo_id }}"{% if panstwo.panstwo_id==marka.panstwo_id %} selected{% endif %}>{{ panstwo.nazwa_panstwa }} ({{ panstwo.skrot|trim }})</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-cart">
+                    {% if tryb=='Edycja' %}
+                        <span class="glyphicon glyphicon-saved" aria-hidden="true"></span>
+                        Edytuj markę
+                    {% else %}
+                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                        Dodaj markę
+                    {% endif %}
+                </button>
+            </form>
+    </div>
+{% endblock %}

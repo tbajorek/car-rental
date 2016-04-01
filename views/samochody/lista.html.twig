@@ -1,0 +1,83 @@
+{% extends '/index.html.twig' %}
+
+{% block title %}Lista samochodów{% endblock %}
+
+{% block content %}
+    <div id="lista_samochodow">
+        <h1>Samochody</h1>
+        {% include 'samochody/lista_filtry.html.twig' %}
+
+        <div class="col-md-9">
+            {% if count(samochody)==0 %}
+            <div class="alert alert-warning" role="alert">
+                Nie znaleziono samochodów
+            </div>
+            {% endif %}
+            {%  for samochod in samochody %}
+            <div class="col-xs-12">
+                <div class="product-col list clearfix">
+                    <div class="image">
+                        {% if samochod.zdjecie == false %}
+                            <img src="images/brak_zdjecia.png" alt="product" class="img-responsive">
+                        {% else %}
+                            <img src="{{ url('zdjecie', {'id':samochod.samochod_id}) }}" alt="product" class="img-responsive">
+                        {% endif %}
+                    </div>
+                    <div class="caption element-do-oceny">
+                        <h4><a href="{{ url('profil_samochodu', {id: samochod.samochod_id}) }}">{{ samochod.nazwa_marki }}&nbsp;{{ samochod.nazwa_samochodu }}</a>
+                        {% if samochod.dostepny == false %}&nbsp;<span class="label label-danger">Aktualnie niedostępny</span></h4>{% endif %}
+                        <input type="hidden" class="rating" data-id="{{ samochod.samochod_id }}" value="{{ samochod.ocena }}"/>
+                        <div class="description">
+                            {{ samochod.opis|raw }}
+                        </div>
+                        <div class="price">
+                            <span class="price-new">{{ samochod.cena }} PLN/dzień</span>
+                        </div>
+                        <div class="cart-button button-group">
+                            {% if app.user != null %}
+                                {% if samochod.uzytkownik != null %}
+                                    <button type="button" title="Usuń z ulubionych" class="btn btn-wishlist" data-type="unlike" data-id="{{ samochod.samochod_id }}">
+                                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                                    </button>
+                                {% else %}
+                                    <button type="button" title="Dodaj do ulubionych" class="btn btn-wishlist" data-type="like" data-id="{{ samochod.samochod_id }}">
+                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                    </button>
+                                {% endif %}
+                                <button type="button" class="btn btn-cart" data-id="{{ samochod.samochod_id }}">
+                                    Zarezerwuj
+                                    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+                                </button>
+                            {% if app.user.admin==true %}
+                                <button type="button" class="btn btn-edit" data-id="{{ samochod.samochod_id }}">
+                                    Edytuj
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-remove" data-id="{{ samochod.samochod_id }}">
+                                    Usuń
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </button>
+                            {% endif %}
+                            {% else %}
+                                <button disabled="disabled" class="btn btn-logout">
+                                    Zaloguj się, aby zarezerwować
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/css/samochody.css">
+    <link rel="stylesheet" href="/css/bootstrap-rating.css">
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="/js/bootstrap-rating.js"></script>
+    <script type="text/javascript" src="/js/oceny.js"></script>
+{% endblock %}

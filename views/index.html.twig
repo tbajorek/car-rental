@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ BASE_URL }}css/bootstrap.css">
+        <link rel="stylesheet" href="{{ BASE_URL }}css/bootstrap-theme.css">
+        <link rel="stylesheet" href="{{ BASE_URL }}css/datatables.css">
+	<link rel="stylesheet" href="{{ BASE_URL }}css/jquery-ui.min.css">
+	<link rel="stylesheet" href="{{ BASE_URL }}css/jquery-ui.structure.css">
+	<link rel="stylesheet" href="{{ BASE_URL }}css/jquery-ui.theme.css">
+        <link rel="stylesheet" href="{{ BASE_URL }}css/main.css">
+        {% block css %}{% endblock %}
+        <script type="text/javascript" src="{{ BASE_URL }}js/php.js"></script>
+        <script type="text/javascript" src="{{ BASE_URL }}js/jquery.js"></script>
+        <script type="text/javascript" src="{{ BASE_URL }}js/bootstrap.js"></script>
+        <script type="text/javascript" src="{{ BASE_URL }}js/datatables.js"></script>
+	<script type="text/javascript" src="{{ BASE_URL }}js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="{{ BASE_URL }}js/main.js"></script>
+        {% block js %}{% endblock %}
+        <title>{% block title %}Strona główna{% endblock %} | TwojeAuto - wypożyczalnia samochodów</title>
+    </head>
+    <body>
+
+        {% include '/menu.html.twig' %}
+        <br />
+        <div class="container">
+            {% for message in app.messages.success %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% for message in app.messages.info %}
+                <div class="alert alert-info" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.messages.error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.messages.warning %}
+                <div class="alert alert-warning" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% block content %}
+            {% endblock %}
+        </div><!-- /.container -->
+    </body>
+</html>

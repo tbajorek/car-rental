@@ -1,0 +1,26 @@
+.product-info .product-details h2 {
+    margin-top: 0px;
+    font-size: 24px;
+    display: inline;
+}
+
+.product-col .btn-wishlist, .product-col .btn-compare, .btn-logout {
+    color: #FFF;
+    background: #2F353B none repeat scroll 0% 0%;
+    margin-right: 3px;
+}
+
+.product-info .product-details .price-new {
+    color: #2F353B;
+    font-size: 18px;
+    padding-right: 5px;
+}
+
+.radio, .checkbox {
+    position: relative;
+    display: block;
+    min-height: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+

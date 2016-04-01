@@ -1,0 +1,35 @@
+body {
+    padding-top: 50px;
+}
+
+.filter-group {
+    margin-left: 20px;
+}
+
+#rezerwacja,#dodaj-form {
+    max-width: 630px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.hidden {
+    display: none;
+}
+
+
+#lista_rezerwacji table td,th,
+#lista_wypozyczen table td,th,
+#lista_historii table td,th,
+#lista_rabatow table td,th,
+#lista_uzytkownikow table td,th,
+#lista_akcesoriow table td,th,
+#lista_marek table td,th,
+#lista_kategorii table td,th
+{
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+.dataTables_wrapper {
+    margin-top: 10px;
+}

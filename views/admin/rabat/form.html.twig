@@ -1,0 +1,74 @@
+{% extends '/index.html.twig' %}
+
+{% block title %}{{ tryb }} rabatu{% endblock %}
+
+{% block content %}
+    <div id="rezerwacja">
+        <h1>{{ tryb }} rabatu</h1>
+        {% if tryb=='Dodawanie' %}
+        <form method="post" action="{{ url('admin_dodaj_rabat') }}">
+        {% else %}
+        <form method="post" action="{{ url('admin_edytuj_rabat', {'id':rabat.numer|trim}) }}">
+        {% endif %}
+            <div class="list-group-item">
+                <label class="checkbox">
+                    Kod (max. 8 znaków):
+                    <input type="text" name="numer" value="{{ rabat.numer|trim }}" required{% if tryb=='Edycja' %} disabled{% endif %}>
+                </label>
+            </div>
+            <div class="list-group-item">
+                <label class="checkbox">
+                    Samochód:
+                    <select name="samochod">
+                        <option value="0">Wszystkie</option>
+                        {% for samochod in samochody %}<option{% if samochod.samochod_id==rabat.samochod_id %} selected{% endif %} value="{{ samochod.samochod_id }}">{{ samochod.nazwa_marki }} {{ samochod.nazwa_samochodu }}</option>{% endfor %}
+                    </select>
+                </label>
+            </div>
+            <div class="list-group-item">
+                <label class="checkbox">
+                    Obniżka:
+                    <input type="text" name="obnizka" value="{{ rabat.obnizka }}">
+                    <select name="procentowo">
+                        <option value="true">%</option>
+                        <option value="false">PLN</option>
+                    </select>
+                </label>
+            </div>
+            <div class="list-group-item">
+                <label class="checkbox">
+                    Obowiązuje od:
+                    <input type="text" name="obowiazuje_od" value="{{ rabat.obowiazuje_od }}">
+                </label>
+            </div>
+            <div class="list-group-item">
+                <label class="checkbox">
+                    Obowiązuje do:
+                    <input type="text" name="obowiazuje_do" value="{{ rabat.obowiazuje_do }}">
+                </label>
+            </div>
+            <div class="list-group-item">
+                <label class="checkbox filter-group">
+                    <input type="checkbox" name="jednorazowy" value="true"{% if rabat.jednorazowy==true %} checked{% endif %}>Jednorazowy
+                </label>
+            </div>
+            <button type="submit" class="btn btn-cart">
+                {% if tryb=='Edycja' %}
+                    <span class="glyphicon glyphicon-saved" aria-hidden="true"></span>
+                    Edytuj rabat
+                {% else %}
+                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                    Dodaj rabat
+                {% endif %}
+            </button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/css/rezerwacja.css">
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="/js/rezerwacja.js"></script>
+{% endblock %}

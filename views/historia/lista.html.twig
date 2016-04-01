@@ -1,0 +1,46 @@
+{% extends '/index.html.twig' %}
+
+{% block title %}Moja historia wypożyczeń{% endblock %}
+
+{% block content %}
+    <div id="lista_historii">
+        <h1>Moja historia wypożyczeń</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Samochód</th>
+                    <th>Data wypożyczenia</th>
+                    <th>Data zwrotu</th>
+                    <th>Czas wypożyczenia</th>
+                    <th>Przebieg</th>
+                    <th>Zapłata (PLN)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if count(wypozyczenia)==0 %}
+                <tr>
+                    <td colspan="6">Brak wypożyczeń</td>
+                </tr>
+                {% endif %}
+                {% for wypozyczenie in wypozyczenia %}
+                <tr>
+                    <td><a href="{{ url('profil_samochodu',{'id':wypozyczenie.samochod_id}) }}">{{ wypozyczenie.nazwa_marki }} {{ wypozyczenie.nazwa_samochodu }}</a></td>
+                    <td>{{ reverse_date(wypozyczenie.wypozyczenie) }}</td>
+                    <td>{{ reverse_date(wypozyczenie.zwrot) }}</td>
+                    <td>{{ wypozyczenie.liczba_dni }} dni</td>
+                    <td>{{ wypozyczenie.przebieg }} km</td>
+                    <td>{{ rezerwacja.zaplata }} PLN</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/css/rezerwacja.css">
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="/js/rezerwacja.js"></script>
+{% endblock %}

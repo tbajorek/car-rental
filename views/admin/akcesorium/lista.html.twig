@@ -1,0 +1,47 @@
+{% extends '/index.html.twig' %}
+
+{% block title %}Lista akcesoriów{% endblock %}
+
+{% block content %}
+    <div id="lista_akcesoriow">
+        <h1>Lista akcesoriów</h1>
+        <button id="dodaj-nowe-akcesorium" class="btn" type="button">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            Dodaj akcesorium
+        </button>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Cena</th>
+                    <th>Menu</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if count(akcesoria)==0 %}
+                <tr>
+                    <td colspan="3">Brak akcesoriów</td>
+                </tr>
+                {% endif %}
+                {% for akcesorium in akcesoria %}
+                <tr>
+                    <td>{{ akcesorium.nazwa_akcesorium }}</td>
+                    <td>{{ akcesorium.cena }} PLN/{% if akcesorium.cena_dziennie==true %}dzień{% else %}jednorazowo{% endif %}</td>
+                    <td>
+                        <button title="Edytuj akcesoriom" type="button" class="btn edytuj-akcesorium" data-id="{{ akcesorium.akcesorium_id }}">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </button>
+                        <button title="Usuń akcesroium" type="button" class="btn usun-akcesorium" data-id="{{ akcesorium.akcesorium_id }}">
+                            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="/js/admin.js"></script>
+{% endblock %}

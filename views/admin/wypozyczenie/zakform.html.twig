@@ -1,0 +1,67 @@
+{% extends '/index.html.twig' %}
+
+{% block title %}Zakończ wypożyczenie{% endblock %}
+
+{% block content %}
+    <div id="rezerwacja">
+        <h1>Oddanie samochodu</h1>
+        <form method="post" action="{{ url('admin_zakoncz_wypozyczenie',{'id':wypozyczenie.wypozyczenie_id}) }}">
+            <div class="list-group-item">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>Pojazd</td>
+                            <td>{{ wypozyczenie.nazwa_marki }} {{ wypozyczenie.nazwa_samochodu }}</td>
+                        </tr>
+                        <tr>
+                            <td>Cena za dzień</td>
+                            <td>{{ wypozyczenie.cena }}</td>
+                        </tr>
+                        <tr>
+                            <td>Rabat</td>
+                            <td>
+                                {% if rezerwacja.rabat==null %}
+                                    <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                                {% else %}
+                                    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Akcesoria</td>
+                            <td>{{ wypozyczenie.akcesoria }}</td>
+                        </tr>
+                        <tr>
+                            <td>Okres od</td>
+                            <td>{{ reverse_date(wypozyczenie.data_od) }}</td>
+                        </tr>
+                        <tr>
+                            <td>Termin zwrotu</td>
+                            <td><input name="data_zwrotu" type="date" value="{{ reverse_date(wypozyczenie.termin_zwrotu) }}"></td>
+                        </tr>
+                        <tr>
+                            <td>Przebieg w dniu wypożyczenia</td>
+                            <td><span id="stary_przebieg">{{ wypozyczenie.przebieg }}</span> km</td>
+                        </tr>
+                        <tr>
+                            <td>Stan licznika</td>
+                            <td><input id="przebieg" name="przebieg" type="text" value="" required> km</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button type="submit" class="btn btn-cart">
+                Zakończ wypożyczenie
+                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+            </button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/css/rezerwacja.css">
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="/js/wypozyczenie.js"></script>
+{% endblock %}

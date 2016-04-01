@@ -1,0 +1,57 @@
+{% extends '/index.html.twig' %}
+
+{% block title %}Rejestracja użytkownika{% endblock %}
+
+{% block content %}
+    <div id="kontakt">
+        <h1>Uzupełnij formularz rejestracyjny</h1>
+        <form method="post" action="{{ url('rejestruj_uzytkownika') }}">
+            <div class="list-group-item">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>Adres e-mail</td>
+                            <td><input type="email" name="email"></td>
+                        </tr>
+                        <tr>
+                            <td>Hasło</td>
+                            <td><input type="password" name="haslo"></td>
+                        </tr>
+                        <tr>
+                            <td>Imię</td>
+                            <td><input type="text" name="imie"></td>
+                        </tr>
+                        <tr>
+                            <td>Nazwisko</td>
+                            <td><input type="text" name="nazwisko"></td>
+                        </tr>
+                        <tr>
+                            <td>Numer PESEL</td>
+                            <td><input type="text" name="pesel"></td>
+                        </tr>
+                        <tr>
+                            <td>Ulica</td>
+                            <td><input type="text" name="ulica"></td>
+                        </tr>
+                        <tr>
+                            <td>Kod pocztowy</td>
+                            <td><input type="text" name="kod_pocztowy"></td>
+                        </tr>
+                        <tr>
+                            <td>Miejscowość</td>
+                            <td><input type="text" name="miejscowosc"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="submit" class="btn">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    Rejestruj
+                </button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/css/kontakt.css">
+{% endblock %}

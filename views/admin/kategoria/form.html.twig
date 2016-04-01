@@ -1,0 +1,31 @@
+{% extends '/index.html.twig' %}
+
+{% block title %}{{ tryb }} kategorii{% endblock %}
+
+{% block content %}
+    <div id="dodaj-form">
+        <h1>{{ tryb }} kategorii</h1>
+        {% if tryb=='Dodawanie' %}
+        <form method="post" action="{{ url('admin_dodaj_kategorie') }}">
+            {% else %}
+            <form method="post" action="{{ url('admin_edytuj_kategorie', {'id':kategoria.kategoria_id}) }}">
+                {% endif %}
+                <div class="list-group-item">
+                    <label class="checkbox">
+                        Nazwa kategorii:
+                        <input type="text" name="nazwa_kategorii" value="{{ kategoria.nazwa_kategorii }}" required>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-cart">
+                    {% if tryb=='Edycja' %}
+                        <span class="glyphicon glyphicon-saved" aria-hidden="true"></span>
+                        Edytuj kategorię
+                    {% else %}
+                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                        Dodaj kategorię
+                    {% endif %}
+                </button>
+            </form>
+    </div>
+{% endblock %}

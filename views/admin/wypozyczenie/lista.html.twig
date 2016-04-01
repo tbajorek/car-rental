@@ -1,0 +1,63 @@
+{% extends '/index.html.twig' %}
+
+{% block title %}Lista wypożyczeń{% endblock %}
+
+{% block content %}
+    <div id="lista_wypozyczen">
+        <h1>Lista wypożyczeń</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Samochód</th>
+                    <th>Użytkownik</th>
+                    <th>Okres od</th>
+                    <th>Okres do</th>
+                    <th>Cena (PLN)</th>
+                    <th>Akcesoria</th>
+                    <th>Rabat</th>
+                    <th>Menu</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if count(wypozyczenia)==0 %}
+                <tr>
+                    <td colspan="8">Brak wypożyczeń</td>
+                </tr>
+                {% endif %}
+                {% for wypozyczenie in wypozyczenia %}
+                <tr>
+                    <td><a href="{{ url('profil_samochodu',{'id':wypozyczenie.samochod_id}) }}">{{ wypozyczenie.nazwa_marki }} {{ wypozyczenie.nazwa_samochodu }}</a></td>
+                    <td>{{ wypozyczenie.imie }} {{ wypozyczenie.nazwisko }} ({{ wypozyczenie.email }})</td>
+                    <td>{{ reverse_date(wypozyczenie.data_od) }}</td>
+                    <td>{{ reverse_date(wypozyczenie.termin_zwrotu) }}</td>
+                    <td>{{ wypozyczenie.cena_wypozyczenia }}</td>
+                    <td>{{ wypozyczenie.akcesoria }}</td>
+                    <td>
+                        {% if wypozyczenie.rabat==null %}
+                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                        {% else %}
+                        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <button title="Zakończ wypożyczenie" type="button" class="btn zakoncz-wypozyczenie" data-id="{{ wypozyczenie.wypozyczenie_id }}">
+                            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+                        </button>
+                        <button title="Usuń wypozyczenie" type="button" class="btn usun-wypozyczenie" data-id="{{ wypozyczenie.wypozyczenie_id }}">
+                            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/css/rezerwacja.css">
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="/js/wypozyczenie.js"></script>
+{% endblock %}

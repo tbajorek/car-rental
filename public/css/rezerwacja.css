@@ -1,0 +1,13 @@
+.price span.price-new {
+    color: #2F353B;
+    font-size: 24px;
+    padding-right: 5px;
+}
+
+#pole_cena_dodatkowo {
+    display: none;
+}
+
+#cena_razem {
+    font-weight: bold;
+}

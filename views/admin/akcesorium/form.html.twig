@@ -1,0 +1,40 @@
+{% extends '/index.html.twig' %}
+
+{% block title %}{{ tryb }} akcesorium{% endblock %}
+
+{% block content %}
+    <div id="dodaj-form">
+        <h1>{{ tryb }} akcesorium</h1>
+        {% if tryb=='Dodawanie' %}
+        <form method="post" action="{{ url('admin_dodaj_akcesorium') }}">
+        {% else %}
+        <form method="post" action="{{ url('admin_edytuj_akcesorium', {'id':akcesorium.akcesorium_id}) }}">
+        {% endif %}
+            <div class="list-group-item">
+                <label class="checkbox">
+                    Nazwa akcesorium:
+                    <input type="text" name="nazwa_akcesorium" value="{{ akcesorium.nazwa_akcesorium }}" required>
+                </label>
+            </div>
+            <div class="list-group-item">
+                <label class="checkbox">
+                    Cena:
+                    <input type="text" name="cena" value="{{ akcesorium.cena }}"> PLN
+                    <select name="cena_dziennie">
+                        <option value="true">/dzień</option>
+                        <option value="false">/jednorazowo</option>
+                    </select>
+                </label>
+            </div>
+            <button type="submit" class="btn btn-cart">
+                {% if tryb=='Edycja' %}
+                    <span class="glyphicon glyphicon-saved" aria-hidden="true"></span>
+                    Edytuj akcesorium
+                {% else %}
+                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                    Dodaj akcesorium
+                {% endif %}
+            </button>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends '/index.html.twig' %}
+
+{% block title %}Lista rezerwacji{% endblock %}
+
+{% block content %}
+    <div id="lista_rezerwacji">
+        <h1>Lista rezerwacji</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Samochód</th>
+                    <th>Użytkownik</th>
+                    <th>Okres od</th>
+                    <th>Okres do</th>
+                    <th>Cena (PLN)</th>
+                    <th>Data rezerwacji</th>
+                    <th>Akcesoria</th>
+                    <th>Rabat</th>
+                    <th>Menu</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if count(rezerwacje)==0 %}
+                <tr>
+                    <td colspan="9">Brak rezerwacji</td>
+                </tr>
+                {% endif %}
+                {% for rezerwacja in rezerwacje %}
+                <tr>
+                    <td><a href="{{ url('profil_samochodu',{'id':rezerwacja.samochod_id}) }}">{{ rezerwacja.nazwa_marki }} {{ rezerwacja.nazwa_samochodu }}</a></td>
+                    <td>{{ rezerwacja.imie }} {{ rezerwacja.nazwisko }} ({{ rezerwacja.email }})</td>
+                    <td>{{ reverse_date(rezerwacja.okres_od) }}</td>
+                    <td>{{ reverse_date(rezerwacja.okres_do) }}</td>
+                    <td>{{ rezerwacja.cena_rezerwacji }}</td>
+                    <td>{{ reverse_date(rezerwacja.data_rezerwacji) }}</td>
+                    <td>{{ rezerwacja.akcesoria }}</td>
+                    <td>
+                        {% if rezerwacja.rabat==null %}
+                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                        {% else %}
+                        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <button title="Zatwierdź rezerwację" type="button" class="btn akceptuj-rezerwacje" data-id="{{ rezerwacja.rezerwacja_id }}">
+                            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+                        </button>
+                        <button title="Usuń rezerwację" type="button" class="btn admin-usun-rezerwacje" data-id="{{ rezerwacja.rezerwacja_id }}">
+                            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/css/rezerwacja.css">
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="/js/rezerwacja.js"></script>
+{% endblock %}

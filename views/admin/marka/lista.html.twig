@@ -1,0 +1,47 @@
+{% extends '/index.html.twig' %}
+
+{% block title %}Lista marek{% endblock %}
+
+{% block content %}
+    <div id="lista_marek">
+        <h1>Lista marek</h1>
+        <button id="dodaj-nowa-marke" class="btn" type="button">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            Dodaj markę
+        </button>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Nazwa</th>
+                <th>Kraj</th>
+                <th>Menu</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if count(marki)==0 %}
+                <tr>
+                    <td colspan="3">Brak marek</td>
+                </tr>
+            {% endif %}
+            {% for marka in marki %}
+                <tr>
+                    <td>{{ marka.nazwa_marki }}</td>
+                    <td>{{ marka.nazwa_panstwa }} ({{ marka.skrot_panstwa|trim }})</td>
+                    <td>
+                        <button title="Edytuj markę" type="button" class="btn edytuj-marke" data-id="{{ marka.marka_id }}">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </button>
+                        <button title="Usuń markę" type="button" class="btn usun-marke" data-id="{{ marka.marka_id }}">
+                            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="/js/admin.js"></script>
+{% endblock %}

@@ -1,0 +1,66 @@
+<div class="col-md-3">
+    {% if app.user!=null %}
+        <h3 class="side-heading">Ulubione</h3>
+        {% if filters.ulubione==null %}
+        <div class="list-group">
+            <div class="list-group-item">
+                <button class="btn btn-warning ulubione-set">Pokaż</button>
+            </div>
+        </div>
+        {% else %}
+            <div class="list-group">
+                <div class="list-group-item">
+                    <button class="btn btn-warning ulubione-unset">Usuń filtr</button>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+    <!-- Categories Links Starts -->
+    <h3 class="side-heading">Kategorie</h3>
+    <div class="list-group">
+        <a href="{{ remove_param({0:'kategoria'}) }}" class="list-group-item">
+            <i class="fa fa-chevron-right"></i>
+            Wszystkie
+        </a>
+        {% for kategoria in kategorie %}
+        <a href="{{ replace_param({'kategoria':kategoria.kategoria_id}) }}" class="list-group-item">
+            <i class="fa fa-chevron-right"></i>
+            {{ kategoria.nazwa_kategorii }}
+        </a>
+        {% endfor %}
+    </div>
+    <!-- Categories Links Ends -->
+    <!-- Shopping Options Starts -->
+    <h3 class="side-heading">Opcje</h3>
+    <div class="list-group">
+        <div class="list-group-item">
+            <label class="checkbox">
+                Nazwa
+                <input id="filter_nazwa" name="nazwa" value="{{ filters.nazwa }}" type="text">
+            </label>
+        </div>
+        <div class="list-group-item">
+            <div class="filter-group">
+                <label class="checkbox">
+                    <input id="filter_dostepne" name="dostepne" type="checkbox"{% if filters.dostepne==1 %} checked{% endif %}>
+                    Tylko dostępne
+                </label>
+            </div>
+        </div>
+        <div class="list-group-item">
+            <div class="filter-group">
+                <label class="checkbox">
+                    Marka
+                    <select name="marki" id="filter_marka">
+                        <option value="0">Wszystkie</option>
+                        {% for marka in marki %}<option{% if marka.marka==filters.marka %} selected{% endif %} value="{{ marka.marka }}">{{ marka.nazwa_marki }}</option>{% endfor %}
+                    </select>
+                </label>
+            </div>
+        </div>
+        <div class="list-group-item">
+            <button class="btn btn-info filter-set">Znajdź</button>
+        </div>
+    </div>
+    <!-- Shopping Options Ends -->
+</div>
